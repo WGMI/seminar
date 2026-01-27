@@ -1,9 +1,75 @@
+'use client'
+
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { ArrowRight, Code2, Gamepad2, GraduationCap, Trophy, Vote, Zap } from 'lucide-react'
 import Link from 'next/link'
+import { useState, useEffect } from 'react'
+
+interface LeaderboardEntry {
+  rank: number
+  player_name: string
+  score: number
+  game: string
+}
 
 export default function Home() {
+  const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([])
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    loadLeaderboard()
+  }, [])
+
+  const loadLeaderboard = async () => {
+    try {
+      setIsLoading(true)
+      
+      // Fetch quiz leaderboard
+      const quizResponse = await fetch('/api/quiz/leaderboard?limit=3')
+      const quizData = await quizResponse.json()
+      
+      // Fetch wordsearch leaderboard
+      const wordsearchResponse = await fetch('/api/wordsearch/leaderboard?limit=2')
+      const wordsearchData = await wordsearchResponse.json()
+      
+      // Combine and format leaderboard entries
+      const combined: LeaderboardEntry[] = []
+      
+      // Add top 3 quiz scores
+      if (quizData.leaderboard) {
+        quizData.leaderboard.slice(0, 3).forEach((entry: any) => {
+          combined.push({
+            rank: entry.rank,
+            player_name: entry.player_name,
+            score: entry.score,
+            game: 'Quiz Game'
+          })
+        })
+      }
+      
+      // Add top 2 wordsearch scores
+      if (wordsearchData.leaderboard) {
+        wordsearchData.leaderboard.slice(0, 2).forEach((entry: any, index: number) => {
+          combined.push({
+            rank: combined.length + 1,
+            player_name: entry.player_name,
+            score: entry.completion_time, // Use completion time as score (lower is better)
+            game: 'Wordsearch'
+          })
+        })
+      }
+      
+      // Sort by score (higher is better, but wordsearch uses time so we'll show them separately)
+      // For now, just show quiz first, then wordsearch
+      setLeaderboard(combined.slice(0, 5))
+    } catch (error) {
+      console.error('Error loading leaderboard:', error)
+      // Fallback to empty array or show error
+    } finally {
+      setIsLoading(false)
+    }
+  }
   return (
     <div className="min-h-screen bg-background">
       {/* Navigation */}
@@ -159,31 +225,39 @@ export default function Home() {
                 </div>
               </CardHeader>
               <CardContent>
-                <div className="space-y-4">
-                  {[
-                    { rank: 1, name: 'Alex Chen', score: 1250, game: 'Code Challenge' },
-                    { rank: 2, name: 'Sarah Johnson', score: 1180, game: 'Quiz Game' },
-                    { rank: 3, name: 'Mike Rodriguez', score: 1120, game: 'Code Challenge' },
-                    { rank: 4, name: 'Emma Wilson', score: 1080, game: 'Quiz Game' },
-                    { rank: 5, name: 'David Lee', score: 1050, game: 'Code Challenge' },
-                  ].map((player) => (
-                    <div key={player.rank} className="flex items-center gap-4 p-4 rounded-lg bg-card border border-border">
-                      <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold ${
-                        player.rank === 1 ? 'bg-secondary text-secondary-foreground' :
-                        player.rank === 2 ? 'bg-muted text-muted-foreground' :
-                        player.rank === 3 ? 'bg-primary/20 text-primary' :
-                        'bg-background text-foreground'
-                      }`}>
-                        {player.rank}
+                {isLoading ? (
+                  <div className="text-center py-8 text-muted-foreground">
+                    Loading leaderboard...
+                  </div>
+                ) : leaderboard.length === 0 ? (
+                  <div className="text-center py-8 text-muted-foreground">
+                    No scores yet. Be the first to play!
+                  </div>
+                ) : (
+                  <div className="space-y-4">
+                    {leaderboard.map((player) => (
+                      <div key={`${player.rank}-${player.player_name}`} className="flex items-center gap-4 p-4 rounded-lg bg-card border border-border">
+                        <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold ${
+                          player.rank === 1 ? 'bg-secondary text-secondary-foreground' :
+                          player.rank === 2 ? 'bg-muted text-muted-foreground' :
+                          player.rank === 3 ? 'bg-primary/20 text-primary' :
+                          'bg-background text-foreground'
+                        }`}>
+                          {player.rank}
+                        </div>
+                        <div className="flex-1">
+                          <div className="font-semibold text-foreground">{player.player_name}</div>
+                          <div className="text-sm text-muted-foreground">{player.game}</div>
+                        </div>
+                        <div className="font-bold text-primary">
+                          {player.game === 'Wordsearch' 
+                            ? `${player.score}s` 
+                            : `${player.score} pts`}
+                        </div>
                       </div>
-                      <div className="flex-1">
-                        <div className="font-semibold text-foreground">{player.name}</div>
-                        <div className="text-sm text-muted-foreground">{player.game}</div>
-                      </div>
-                      <div className="font-bold text-primary">{player.score} pts</div>
-                    </div>
-                  ))}
-                </div>
+                    ))}
+                  </div>
+                )}
               </CardContent>
             </Card>
           </div>
