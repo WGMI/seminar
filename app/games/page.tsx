@@ -2,7 +2,7 @@
 
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { ArrowLeft, Gamepad2, Search, Zap } from 'lucide-react'
+import { ArrowLeft, Gamepad2, Search, Trophy, Zap } from 'lucide-react'
 import Link from 'next/link'
 import { useState, useEffect, useRef } from 'react'
 import { generateSessionId } from '@/lib/utils'
@@ -468,8 +468,68 @@ function WordsearchGame() {
   )
 }
 
+interface LeaderboardEntry {
+  rank: number
+  player_name: string
+  score: number
+  game: string
+}
+
 export default function GamesPage() {
   const [activeGame, setActiveGame] = useState<'quiz' | 'wordsearch' | null>(null)
+  const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([])
+  const [isLoadingLeaderboard, setIsLoadingLeaderboard] = useState(true)
+
+  useEffect(() => {
+    loadLeaderboard()
+  }, [])
+
+  const loadLeaderboard = async () => {
+    try {
+      setIsLoadingLeaderboard(true)
+      
+      // Fetch quiz leaderboard
+      const quizResponse = await fetch('/api/quiz/leaderboard?limit=3')
+      const quizData = await quizResponse.json()
+      
+      // Fetch wordsearch leaderboard
+      const wordsearchResponse = await fetch('/api/wordsearch/leaderboard?limit=2')
+      const wordsearchData = await wordsearchResponse.json()
+      
+      // Combine and format leaderboard entries
+      const combined: LeaderboardEntry[] = []
+      
+      // Add top 3 quiz scores
+      if (quizData.leaderboard) {
+        quizData.leaderboard.slice(0, 3).forEach((entry: any) => {
+          combined.push({
+            rank: entry.rank,
+            player_name: entry.player_name,
+            score: entry.score,
+            game: 'Quiz Game'
+          })
+        })
+      }
+      
+      // Add top 2 wordsearch scores
+      if (wordsearchData.leaderboard) {
+        wordsearchData.leaderboard.slice(0, 2).forEach((entry: any) => {
+          combined.push({
+            rank: combined.length + 1,
+            player_name: entry.player_name,
+            score: entry.completion_time, // Use completion time as score (lower is better)
+            game: 'Wordsearch'
+          })
+        })
+      }
+      
+      setLeaderboard(combined.slice(0, 5))
+    } catch (error) {
+      console.error('Error loading leaderboard:', error)
+    } finally {
+      setIsLoadingLeaderboard(false)
+    }
+  }
 
   return (
     <div className="min-h-screen bg-background">
@@ -514,7 +574,59 @@ export default function GamesPage() {
       <section className="pb-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
           {!activeGame ? (
-            <div className="grid md:grid-cols-2 gap-8">
+            <>
+              {/* Leaderboard Section */}
+              <div className="mb-12">
+                <Card className="bg-background border-border">
+                  <CardHeader>
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-secondary/10 rounded-lg flex items-center justify-center">
+                        <Trophy className="w-5 h-5 text-secondary" />
+                      </div>
+                      <CardTitle>Top Players</CardTitle>
+                    </div>
+                    <CardDescription>See who's leading the competition!</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    {isLoadingLeaderboard ? (
+                      <div className="text-center py-8 text-muted-foreground">
+                        Loading leaderboard...
+                      </div>
+                    ) : leaderboard.length === 0 ? (
+                      <div className="text-center py-8 text-muted-foreground">
+                        No scores yet. Be the first to play!
+                      </div>
+                    ) : (
+                      <div className="space-y-4">
+                        {leaderboard.map((player) => (
+                          <div key={`${player.rank}-${player.player_name}`} className="flex items-center gap-4 p-4 rounded-lg bg-card border border-border">
+                            <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold ${
+                              player.rank === 1 ? 'bg-secondary text-secondary-foreground' :
+                              player.rank === 2 ? 'bg-muted text-muted-foreground' :
+                              player.rank === 3 ? 'bg-primary/20 text-primary' :
+                              'bg-background text-foreground'
+                            }`}>
+                              {player.rank}
+                            </div>
+                            <div className="flex-1">
+                              <div className="font-semibold text-foreground">{player.player_name}</div>
+                              <div className="text-sm text-muted-foreground">{player.game}</div>
+                            </div>
+                            <div className="font-bold text-primary">
+                              {player.game === 'Wordsearch' 
+                                ? `${player.score}s` 
+                                : `${player.score} pts`}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
+              </div>
+
+              {/* Game Selection Cards */}
+              <div className="grid md:grid-cols-2 gap-8">
               <Card 
                 className="bg-background border-border p-8 hover:shadow-lg transition-all cursor-pointer"
                 onClick={() => setActiveGame('quiz')}
@@ -542,7 +654,8 @@ export default function GamesPage() {
                 </p>
                 <Button variant="secondary" className="w-full">Play Wordsearch</Button>
               </Card>
-            </div>
+              </div>
+            </>
           ) : (
             <div className="max-w-3xl mx-auto space-y-6">
               <Button 
