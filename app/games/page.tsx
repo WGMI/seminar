@@ -115,13 +115,13 @@ function QuizGame() {
       clearInterval(countdownRef.current)
     }
     
-    // Start countdown
-    let countdownValue = 3
+    // Start countdown (1.5 seconds)
+    let countdownValue = 1.5
     setCountdown(countdownValue)
     
-    // Countdown interval
+    // Countdown interval (update every 0.5 seconds for smoother display)
     countdownRef.current = setInterval(() => {
-      countdownValue--
+      countdownValue -= 0.5
       if (countdownValue <= 0) {
         if (countdownRef.current) {
           clearInterval(countdownRef.current)
@@ -132,7 +132,7 @@ function QuizGame() {
       } else {
         setCountdown(countdownValue)
       }
-    }, 1000)
+    }, 500)
   }
   
   // Cleanup countdown on unmount or question change
@@ -342,10 +342,10 @@ function QuizGame() {
             >
               {currentQuestion < questions.length - 1 
                 ? (countdown !== null && countdown > 0 
-                    ? `Next Question (${countdown})` 
+                    ? `Next Question (${countdown.toFixed(1)})` 
                     : 'Next Question')
                 : (countdown !== null && countdown > 0 
-                    ? `Finish Quiz (${countdown})` 
+                    ? `Finish Quiz (${countdown.toFixed(1)})` 
                     : 'Finish Quiz')}
             </Button>
           )}
