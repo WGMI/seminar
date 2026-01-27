@@ -1,65 +1,335 @@
-import Image from "next/image";
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { ArrowRight, Code2, Gamepad2, GraduationCap, Trophy, Vote, Zap } from 'lucide-react'
+import Link from 'next/link'
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <div className="min-h-screen bg-background">
+      {/* Navigation */}
+      <nav className="sticky top-0 z-50 bg-background/80 backdrop-blur-sm border-b border-border">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+              <Zap className="w-5 h-5 text-primary-foreground" />
+            </div>
+            <span className="font-bold text-lg text-foreground">Pathways Software Dev</span>
+          </div>
+          <Button 
+            variant="default"
+            className="bg-primary hover:bg-primary/90 text-primary-foreground"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+            Join a Class
+          </Button>
         </div>
-      </main>
+      </nav>
+
+      {/* Hero Section - Welcome */}
+      <section className="relative px-4 sm:px-6 lg:px-8 py-20 sm:py-32 max-w-6xl mx-auto">
+        <div className="text-center space-y-8">
+          <div className="space-y-4">
+            <h1 className="text-5xl sm:text-6xl font-bold text-balance">
+              Welcome to The
+              <span className="block text-primary">Pathways Software Dev Department</span>
+            </h1>
+            
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto text-balance">
+              Explore innovative projects, compete in games, join classes, and participate in our community. Your journey in software development starts here.
+            </p>
+          </div>
+
+          <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
+            <Link href="/projects">
+              <Button 
+                size="lg"
+                className="bg-primary hover:bg-primary/90 text-primary-foreground h-12 px-8 text-base"
+              >
+                Explore Projects
+                <ArrowRight className="w-5 h-5 ml-2" />
+              </Button>
+            </Link>
+            <Link href="/games">
+              <Button 
+                size="lg"
+                variant="outline"
+                className="h-12 px-8 text-base bg-transparent"
+              >
+                Play Games
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Explore Projects Section */}
+      <section className="bg-card py-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-3xl sm:text-4xl font-bold text-center mb-16">Explore Our Projects</h2>
+          
+          <div className="grid md:grid-cols-3 gap-8">
+            <Link href="/projects">
+              <Card className="bg-background border-border p-8 hover:shadow-lg transition-shadow cursor-pointer">
+                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-6">
+                  <Code2 className="w-6 h-6 text-primary" />
+                </div>
+                <h3 className="text-xl font-bold mb-3">AI Project Guides</h3>
+                <p className="text-muted-foreground">
+                  Step-by-step guides to build daily planners, budget apps, and personal assistants with AI.
+                </p>
+              </Card>
+            </Link>
+
+            <Card className="bg-background border-border p-8 hover:shadow-lg transition-shadow cursor-pointer">
+              <div className="w-12 h-12 bg-secondary/10 rounded-lg flex items-center justify-center mb-6">
+                <Code2 className="w-6 h-6 text-secondary" />
+              </div>
+              <h3 className="text-xl font-bold mb-3">Mobile Apps</h3>
+              <p className="text-muted-foreground">
+                Check out our mobile applications developed for iOS and Android platforms.
+              </p>
+            </Card>
+
+            <Card className="bg-background border-border p-8 hover:shadow-lg transition-shadow cursor-pointer">
+              <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-6">
+                <Code2 className="w-6 h-6 text-primary" />
+              </div>
+              <h3 className="text-xl font-bold mb-3">Open Source</h3>
+              <p className="text-muted-foreground">
+                Browse our open source contributions and community-driven projects.
+              </p>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Play Games Section */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-3xl sm:text-4xl font-bold text-center mb-16">Play Games</h2>
+          
+          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <Link href="/games">
+              <Card className="bg-background border-border p-8 hover:shadow-lg transition-shadow cursor-pointer">
+                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-6">
+                  <Gamepad2 className="w-6 h-6 text-primary" />
+                </div>
+                <h3 className="text-xl font-bold mb-3">Tech Quiz</h3>
+                <p className="text-muted-foreground mb-4">
+                  Answer 8 questions from our pool of 25. Test your knowledge and compete on the leaderboard!
+                </p>
+                <Button variant="outline" className="w-full">
+                  Play Now
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                </Button>
+              </Card>
+            </Link>
+
+            <Link href="/games">
+              <Card className="bg-background border-border p-8 hover:shadow-lg transition-shadow cursor-pointer">
+                <div className="w-12 h-12 bg-secondary/10 rounded-lg flex items-center justify-center mb-6">
+                  <Gamepad2 className="w-6 h-6 text-secondary" />
+                </div>
+                <h3 className="text-xl font-bold mb-3">Wordsearch</h3>
+                <p className="text-muted-foreground mb-4">
+                  Find all the hidden words in the grid. Challenge yourself with tech-related terms!
+                </p>
+                <Button variant="outline" className="w-full">
+                  Play Now
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                </Button>
+              </Card>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Games Leaderboard Section */}
+      <section className="bg-card py-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-3xl sm:text-4xl font-bold text-center mb-16">Games Leaderboard</h2>
+          
+          <div className="max-w-2xl mx-auto">
+            <Card className="bg-background border-border">
+              <CardHeader>
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-secondary/10 rounded-lg flex items-center justify-center">
+                    <Trophy className="w-5 h-5 text-secondary" />
+                  </div>
+                  <CardTitle>Top Players</CardTitle>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {[
+                    { rank: 1, name: 'Alex Chen', score: 1250, game: 'Code Challenge' },
+                    { rank: 2, name: 'Sarah Johnson', score: 1180, game: 'Quiz Game' },
+                    { rank: 3, name: 'Mike Rodriguez', score: 1120, game: 'Code Challenge' },
+                    { rank: 4, name: 'Emma Wilson', score: 1080, game: 'Quiz Game' },
+                    { rank: 5, name: 'David Lee', score: 1050, game: 'Code Challenge' },
+                  ].map((player) => (
+                    <div key={player.rank} className="flex items-center gap-4 p-4 rounded-lg bg-card border border-border">
+                      <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold ${
+                        player.rank === 1 ? 'bg-secondary text-secondary-foreground' :
+                        player.rank === 2 ? 'bg-muted text-muted-foreground' :
+                        player.rank === 3 ? 'bg-primary/20 text-primary' :
+                        'bg-background text-foreground'
+                      }`}>
+                        {player.rank}
+                      </div>
+                      <div className="flex-1">
+                        <div className="font-semibold text-foreground">{player.name}</div>
+                        <div className="text-sm text-muted-foreground">{player.game}</div>
+                      </div>
+                      <div className="font-bold text-primary">{player.score} pts</div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Join a Class Section */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-3xl sm:text-4xl font-bold text-center mb-16">Join a Class</h2>
+          
+          <div className="grid md:grid-cols-3 gap-8">
+            <Card className="bg-background border-border p-8 hover:shadow-lg transition-shadow">
+              <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-6">
+                <GraduationCap className="w-6 h-6 text-primary" />
+              </div>
+              <h3 className="text-xl font-bold mb-3">Web Development</h3>
+              <p className="text-muted-foreground mb-4">
+                Learn modern web development with React, Next.js, and TypeScript.
+              </p>
+              <Button variant="outline" className="w-full">
+                Join Class
+              </Button>
+            </Card>
+
+            <Card className="bg-background border-border p-8 hover:shadow-lg transition-shadow">
+              <div className="w-12 h-12 bg-secondary/10 rounded-lg flex items-center justify-center mb-6">
+                <GraduationCap className="w-6 h-6 text-secondary" />
+              </div>
+              <h3 className="text-xl font-bold mb-3">Mobile Development</h3>
+              <p className="text-muted-foreground mb-4">
+                Build mobile apps with React Native and Flutter.
+              </p>
+              <Button variant="outline" className="w-full">
+                Join Class
+              </Button>
+            </Card>
+
+            <Card className="bg-background border-border p-8 hover:shadow-lg transition-shadow">
+              <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-6">
+                <GraduationCap className="w-6 h-6 text-primary" />
+              </div>
+              <h3 className="text-xl font-bold mb-3">Backend Development</h3>
+              <p className="text-muted-foreground mb-4">
+                Master server-side development with Node.js and databases.
+              </p>
+              <Button variant="outline" className="w-full">
+                Join Class
+              </Button>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Voting Widget Section */}
+      <section className="bg-card py-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-3xl sm:text-4xl font-bold text-center mb-16">Community Vote</h2>
+          
+          <div className="max-w-2xl mx-auto">
+            <Card className="bg-background border-border">
+              <CardHeader>
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
+                    <Vote className="w-5 h-5 text-primary" />
+                  </div>
+                  <div>
+                    <CardTitle>Community Voting</CardTitle>
+                    <CardDescription>Cast your vote and help shape our next project</CardDescription>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <p className="text-muted-foreground">
+                    Participate in our community voting system. Admin sets questions and you vote on your preferred option.
+                  </p>
+                  <div className="flex gap-3">
+                    <Link href="/voting" className="flex-1">
+                      <Button className="w-full">
+                        <Vote className="w-4 h-4 mr-2" />
+                        Vote Now
+                      </Button>
+                    </Link>
+                    <Link href="/voting/results" className="flex-1">
+                      <Button variant="outline" className="w-full">
+                        View Results
+                      </Button>
+                    </Link>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-card border-t border-border py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-4 gap-8 mb-8">
+            <div>
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+                  <Zap className="w-5 h-5 text-primary-foreground" />
+                </div>
+                <span className="font-bold text-foreground">Pathways Software Dev</span>
+              </div>
+              <p className="text-sm text-muted-foreground">Building the future of software development education.</p>
+            </div>
+            <div>
+              <h4 className="font-semibold text-foreground mb-4">Quick Links</h4>
+              <ul className="space-y-2 text-sm text-muted-foreground">
+                <li><a href="#" className="hover:text-primary transition-colors">Home</a></li>
+                <li><a href="#" className="hover:text-primary transition-colors">Projects</a></li>
+                <li><a href="#" className="hover:text-primary transition-colors">Games</a></li>
+                <li><a href="#" className="hover:text-primary transition-colors">Classes</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-semibold text-foreground mb-4">Contact</h4>
+              <ul className="space-y-2 text-sm text-muted-foreground">
+                <li><a href="mailto:dev@pathways.edu" className="hover:text-primary transition-colors">Email</a></li>
+                <li><a href="#" className="hover:text-primary transition-colors">Discord</a></li>
+                <li><a href="#" className="hover:text-primary transition-colors">GitHub</a></li>
+                <li><a href="#" className="hover:text-primary transition-colors">LinkedIn</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-semibold text-foreground mb-4">Newsletter</h4>
+              <p className="text-sm text-muted-foreground mb-4">Get updates about new projects and classes</p>
+              <input 
+                type="email" 
+                placeholder="Your email" 
+                className="w-full px-3 py-2 rounded bg-input border border-border text-foreground text-sm placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+              />
+            </div>
+          </div>
+          
+          <div className="border-t border-border pt-8">
+            <p className="text-center text-sm text-muted-foreground">
+              © 2024 Pathways Software Dev Department. All rights reserved.
+            </p>
+          </div>
+        </div>
+      </footer>
     </div>
-  );
+  )
 }
