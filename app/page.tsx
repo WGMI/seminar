@@ -2,7 +2,7 @@
 
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { ArrowRight, Code2, Gamepad2, GraduationCap, Trophy, Vote, Zap } from 'lucide-react'
+import { ArrowRight, Gamepad2, Trophy, Vote, Zap } from 'lucide-react'
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 
@@ -81,12 +81,6 @@ export default function Home() {
             </div>
             <span className="font-bold text-lg text-foreground">Pathways Software Dev</span>
           </div>
-          <Button 
-            variant="default"
-            className="bg-primary hover:bg-primary/90 text-primary-foreground"
-          >
-            Join a Class
-          </Button>
         </div>
       </nav>
 
@@ -123,47 +117,6 @@ export default function Home() {
                 Play Games
               </Button>
             </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* Explore Projects Section */}
-      <section className="bg-card py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl sm:text-4xl font-bold text-center mb-16">Explore Our Projects</h2>
-          
-          <div className="grid md:grid-cols-3 gap-8">
-            <Link href="/projects">
-              <Card className="bg-background border-border p-8 hover:shadow-lg transition-shadow cursor-pointer">
-                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-6">
-                  <Code2 className="w-6 h-6 text-primary" />
-                </div>
-                <h3 className="text-xl font-bold mb-3">AI Project Guides</h3>
-                <p className="text-muted-foreground">
-                  Step-by-step guides to build daily planners, budget apps, and personal assistants with AI.
-                </p>
-              </Card>
-            </Link>
-
-            <Card className="bg-background border-border p-8 hover:shadow-lg transition-shadow cursor-pointer">
-              <div className="w-12 h-12 bg-secondary/10 rounded-lg flex items-center justify-center mb-6">
-                <Code2 className="w-6 h-6 text-secondary" />
-              </div>
-              <h3 className="text-xl font-bold mb-3">Mobile Apps</h3>
-              <p className="text-muted-foreground">
-                Check out our mobile applications developed for iOS and Android platforms.
-              </p>
-            </Card>
-
-            <Card className="bg-background border-border p-8 hover:shadow-lg transition-shadow cursor-pointer">
-              <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-6">
-                <Code2 className="w-6 h-6 text-primary" />
-              </div>
-              <h3 className="text-xl font-bold mb-3">Open Source</h3>
-              <p className="text-muted-foreground">
-                Browse our open source contributions and community-driven projects.
-              </p>
-            </Card>
           </div>
         </div>
       </section>
@@ -259,54 +212,6 @@ export default function Home() {
                   </div>
                 )}
               </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
-
-      {/* Join a Class Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl sm:text-4xl font-bold text-center mb-16">Join a Class</h2>
-          
-          <div className="grid md:grid-cols-3 gap-8">
-            <Card className="bg-background border-border p-8 hover:shadow-lg transition-shadow">
-              <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-6">
-                <GraduationCap className="w-6 h-6 text-primary" />
-              </div>
-              <h3 className="text-xl font-bold mb-3">Web Development</h3>
-              <p className="text-muted-foreground mb-4">
-                Learn modern web development with React, Next.js, and TypeScript.
-              </p>
-              <Button variant="outline" className="w-full">
-                Join Class
-              </Button>
-            </Card>
-
-            <Card className="bg-background border-border p-8 hover:shadow-lg transition-shadow">
-              <div className="w-12 h-12 bg-secondary/10 rounded-lg flex items-center justify-center mb-6">
-                <GraduationCap className="w-6 h-6 text-secondary" />
-              </div>
-              <h3 className="text-xl font-bold mb-3">Mobile Development</h3>
-              <p className="text-muted-foreground mb-4">
-                Build mobile apps with React Native and Flutter.
-              </p>
-              <Button variant="outline" className="w-full">
-                Join Class
-              </Button>
-            </Card>
-
-            <Card className="bg-background border-border p-8 hover:shadow-lg transition-shadow">
-              <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-6">
-                <GraduationCap className="w-6 h-6 text-primary" />
-              </div>
-              <h3 className="text-xl font-bold mb-3">Backend Development</h3>
-              <p className="text-muted-foreground mb-4">
-                Master server-side development with Node.js and databases.
-              </p>
-              <Button variant="outline" className="w-full">
-                Join Class
-              </Button>
             </Card>
           </div>
         </div>
