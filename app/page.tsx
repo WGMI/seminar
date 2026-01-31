@@ -3,6 +3,8 @@
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { ArrowRight, Gamepad2, Trophy, Vote, Zap } from 'lucide-react'
+import { NextSessionSection } from '@/components/next-session-section'
+import { NextSessionWidget } from '@/components/next-session-widget'
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 
@@ -81,6 +83,7 @@ export default function Home() {
             </div>
             <span className="font-bold text-lg text-foreground">Pathways Software Dev</span>
           </div>
+          <NextSessionWidget />
         </div>
       </nav>
 
@@ -259,6 +262,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Time to next session */}
+      <NextSessionSection />
 
       {/* Footer */}
       <footer className="bg-card border-t border-border py-12 px-4 sm:px-6 lg:px-8">

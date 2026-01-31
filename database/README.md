@@ -12,16 +12,18 @@ This directory contains the SQL schema and setup instructions for the Pathways S
 
 ### 2. Run the Schema
 
-You can run the schema in one of two ways:
+Run each schema file in order: `schema.sql`, `voting-schema.sql`, and `next-session-schema.sql`.
 
 #### Option A: Using Neon Console
 1. Open the Neon SQL Editor
-2. Copy and paste the contents of `schema.sql`
-3. Execute the script
+2. Copy and paste the contents of `schema.sql`, then execute
+3. Run `voting-schema.sql` and `next-session-schema.sql` the same way
 
 #### Option B: Using psql
 ```bash
 psql "your-neon-connection-string" -f schema.sql
+psql "your-neon-connection-string" -f voting-schema.sql
+psql "your-neon-connection-string" -f next-session-schema.sql
 ```
 
 #### Option C: Using a Database Client
