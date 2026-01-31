@@ -6,6 +6,7 @@ import { ArrowRight, Gamepad2, Trophy, Vote, Zap } from 'lucide-react'
 import { NextSessionSection } from '@/components/next-session-section'
 import { NextSessionWidget } from '@/components/next-session-widget'
 import Link from 'next/link'
+import Image from 'next/image'
 import { useState, useEffect } from 'react'
 
 interface LeaderboardEntry {
@@ -90,6 +91,19 @@ export default function Home() {
       {/* Hero Section - Welcome */}
       <section className="relative px-4 sm:px-6 lg:px-8 py-20 sm:py-32 max-w-6xl mx-auto">
         <div className="text-center space-y-8">
+          <div className="flex justify-center">
+            <div className="rounded-lg border border-border bg-muted/30 p-3 shadow-sm">
+              <Image
+                src="/qr.gif"
+                alt="Scan to visit this site"
+                width={160}
+                height={160}
+                className="rounded"
+                priority
+              />
+              <p className="text-sm text-muted-foreground mt-2">Scan to visit</p>
+            </div>
+          </div>
           <div className="space-y-4">
             <h1 className="text-5xl sm:text-6xl font-bold text-balance">
               Welcome to The
